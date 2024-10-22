@@ -9,5 +9,6 @@ try {
     echo "Connexion réussie";
 } catch(PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
+    
 }
 ?>
