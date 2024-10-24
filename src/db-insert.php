@@ -22,14 +22,26 @@ try {
    $pdo->beginTransaction();
 
    try {
+    $objectives = [
+        "Mathilde" => 12300,
+        "Jacque" => 8000,
+        "Vincent" => 18921,
+        "Ahcene" => 13111,
+        "Kevin" => 9432,
+        "Sofiane" => 6500,
+        "Sandra" => 14000
+    ];
+    
+    
        while (($row = fgetcsv($csvFile, 1000, ",")) !== false) {
            if (count($row) >= 3) {
                $id = intval($row[0]);
                $nom = $row[1];
                $ca = floatval($row[2]);
-
-               $stmt = $pdo->prepare("INSERT INTO utilisateurs (id, nom, ca) VALUES (?, ?, ?)");
-               $stmt->execute([$id, $nom, $ca]);
+               $attainment_rate = round(($ca / $objectives[$nom]) * 100, 2);
+               echo "$attainment_rate";
+               $stmt = $pdo->prepare("INSERT INTO utilisateurs (id, nom, ca,attainment_rate) VALUES (?, ?, ?,?)");
+               $stmt->execute([$id, $nom, $ca, $attainment_rate]);
                $count++;
            }
        }

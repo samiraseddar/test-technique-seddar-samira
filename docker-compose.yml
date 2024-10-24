@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   php:
-    image: php:8.1-apache
+    build: .
     volumes:
       - ./src:/var/www/html
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       - db
     networks:
