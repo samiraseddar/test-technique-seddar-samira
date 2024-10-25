@@ -1,16 +1,9 @@
 <?php
-$dsn = 'mysql:host=localhost;dbname=testdb;charset=utf8';
-$user = 'root';
-$password = '';
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
+
+require_once "private/config.php";
 
 try {
-    $pdo = new PDO($dsn, $user, $password, $options);
-    $stmt = $pdo->query('SELECT id, nom, ca, attainment_rate FROM utilisateurs');
+    $stmt = $conn->query('SELECT id, nom, ca, attainment_rate FROM utilisateurs');
     $rankings = $stmt->fetchAll();
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();

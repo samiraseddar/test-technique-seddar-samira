@@ -2,31 +2,27 @@ version: '3.8'
 
 services:
   php:
-    build: .
+    build: ".docker/php"
+    working_dir: /var/www/html
     volumes:
       - ./src:/var/www/html
     ports:
-      - "8081:80"
+      - "80:80"
     depends_on:
       - db
-    networks:
-      - app-network
-
+    env_file:
+      - ./.env
   db:
-    image: mysql:8.0
+    image: mysql:8.0.40
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: testdb
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - db-data:/var/lib/mysql
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
 
 volumes:
   db-data:
